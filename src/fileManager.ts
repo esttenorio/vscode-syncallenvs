@@ -1,8 +1,29 @@
 import * as vscode from "vscode";
-import { writeFileSync, readFileSync, createReadStream, ReadStream } from "fs";
-import * as readline from "readline";
-import { Readable } from "stream";
-import { ENV_SEPARATOR, COMMENT_SEPARATOR, UNMATCHED_VARS_MESSAGE } from "./constants";
+import { writeFileSync, readFileSync } from "fs";
+import { ENV_SEPARATOR, COMMENT_SEPARATOR, UNMATCHED_VARS_MESSAGE, EXTENSION_NAME, TARGET_PATTERN_SETTING, TEMPLATE_FILENAME_SETTING } from "./constants";
+
+export const createFileManager = async () => {
+    const templateName = vscode.workspace.getConfiguration(EXTENSION_NAME).get(TEMPLATE_FILENAME_SETTING);
+    const targetFilePattern = vscode.workspace.getConfiguration(EXTENSION_NAME).get(TARGET_PATTERN_SETTING);
+    
+    // Setup
+    return await vscode.workspace
+        .findFiles(`**/${templateName}`, undefined, 1)
+        .then(async templateFile => {
+            if (templateFile.length === 0) {
+                vscode.window.showWarningMessage(`Template file "${templateName}" not found in working directory`);
+                return;
+            }
+    
+            const targetFiles = await vscode.workspace.findFiles(`**/${targetFilePattern}`, ".env");
+            if (targetFiles.length === 0) {
+                vscode.window.showWarningMessage(`No files following the pattern "${targetFilePattern}" were found`);
+                return;
+            }
+    
+            return new FileManager(templateFile[0], targetFiles);
+        });
+};
 
 export class FileManager {
 

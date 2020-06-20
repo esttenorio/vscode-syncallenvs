@@ -19,6 +19,23 @@
 				"command": "syncallenvs.syncAllEnvFiles",
 				"title": "Sync All .env files"
 			}
+		],
+		"configuration":[
+			{
+				"title": "Sync All Evs",
+				"properties": {
+					"syncallenvs.templateFilename": {
+						"type": "string",
+						"default": ".env.template",
+						"description": "Specifies the filename template to be used as base to sync other files"
+					},
+					"syncallenvs.targetFilenamePattern": {
+						"type": "string",
+						"default": "*.env",
+						"description": "Specifies filename pattern of the filename to be used to by synced with the template file"
+					}
+				}
+			}
 		]
 	},
 	"scripts": {
