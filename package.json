@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:syncallenvs.helloWorld"
+		"onCommand:syncallenvs.syncAllEnvFiles"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "syncallenvs.helloWorld",
-				"title": "Hello World"
+				"command": "syncallenvs.syncAllEnvFiles",
+				"title": "Sync All .env files"
 			}
 		]
 	},
