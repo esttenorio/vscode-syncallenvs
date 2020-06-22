@@ -9,6 +9,7 @@ export const TARGET_PATTERN_SETTING = "targetFilenamePattern"
 
 // Actions
 export const SYNC_ALL_ENV_FILES_ACTION = `${EXTENSION_NAME}.syncAllEnvFiles`
+export const SYNC_SELECTED_ENV_FILES_ACTION = `${EXTENSION_NAME}.syncSelectedEnvFile`
 
 // Text
 export const UNMATCHED_VARS_MESSAGE = "#====================\n# Unmatched strings\n#===================="

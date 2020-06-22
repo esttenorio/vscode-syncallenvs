@@ -10,14 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:syncallenvs.syncAllEnvFiles"
+		"onCommand:syncallenvs.syncAllEnvFiles",
+		"onCommand:syncallenvs.syncSelectedEnvFile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "syncallenvs.syncAllEnvFiles",
-				"title": "Sync All .env files"
+				"title": "Sync all .env files"
+			},
+			{
+				"command": "syncallenvs.syncSelectedEnvFile",
+				"title": "Sync selected .env file"
 			}
 		],
 		"configuration":[
