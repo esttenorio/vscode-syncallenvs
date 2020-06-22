@@ -2,7 +2,7 @@
 	"name": "syncallenvs",
 	"displayName": "SyncAllEnvs",
 	"description": "Sync all *.env files with a template template.env",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "esttenorio",
 	"repository": {
 		"type": "git",
@@ -30,7 +30,7 @@
 				"title": "Sync selected .env file"
 			}
 		],
-		"configuration":[
+		"configuration": [
 			{
 				"title": "Sync All Evs",
 				"properties": {
