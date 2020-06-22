@@ -89,11 +89,7 @@ export class FileManager {
         const strippedLine = line.trim()
         if (this.isNotCommentLine(strippedLine)) {
             // Line contents information
-            var variableInfo = strippedLine.split(ENV_SEPARATOR, 2 /*limit*/);
-            const key = variableInfo[0];
-            const value = variableInfo.length > 1 ? variableInfo[1] : undefined;
-
-            return [key, value];
+            return this.extractKeyAndValue(strippedLine);
         }
 
         return undefined;
@@ -110,9 +106,10 @@ export class FileManager {
             const strippedLine = line.trim()
             if (this.isNotCommentLine(strippedLine)) {
                 // Replace empty space with old content
-                const entry = strippedLine.split(ENV_SEPARATOR, 2 /*limit*/);
-                const key = entry[0];
-                const newValue = entry.length > 1 ? entry[1] : undefined;
+
+                const result = this.extractKeyAndValue(strippedLine);
+                const key = result[0];
+                const newValue = result[1];
                 const oldValue = content[key] ? content[key] : undefined;
 
                 if (oldValue?.value)
@@ -147,6 +144,14 @@ export class FileManager {
         }
 
         this.writeFile(filePath, Buffer.from(rawContent.join('\n')));
+    }
+
+    private extractKeyAndValue(line: string): [string, string?] {
+        const entry = line.split(ENV_SEPARATOR);
+        const key = entry[0];
+        const value = entry.length > 1 ? (entry.slice(1)).join(ENV_SEPARATOR) : undefined;
+
+        return [key, value];
     }
 
 }

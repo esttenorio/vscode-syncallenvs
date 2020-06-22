@@ -46,9 +46,13 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 1.0.0
+### 0.0.1
 
 Initial release of SyncAllEnvs with sync all \*.env files, sync selected \*.env file and allowing user to customize template env file and target env files pattern
+
+### 0.0.2
+
+Fixing bug where values with `=` were cut off because it matched separator
 
 -----------------------------------------------------------------------------------------------------------
 
