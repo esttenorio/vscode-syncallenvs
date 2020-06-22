@@ -1,65 +1,55 @@
-# syncallenvs README
+# SYNC ALL ENVS
 
-This is the README for your extension "syncallenvs". After writing up a brief description, we recommend including the following sections.
+```
+  / ____\ \   / / \ | |/ ____|     /\   | |    | |      |  ____| \ | \ \    / / ____|
+ | (___  \ \_/ /|  \| | |         /  \  | |    | |      | |__  |  \| |\ \  / / (___  
+  \___ \  \   / | . ` | |        / /\ \ | |    | |      |  __| | . ` | \ \/ / \___ \ 
+  ____) |  | |  | |\  | |____   / ____ \| |____| |____  | |____| |\  |  \  /  ____) |
+ |_____/   |_|  |_| \_|\_____| /_/    \_\______|______| |______|_| \_|   \/  |_____/ 
+```
+
+SYNC ALL ENVS is an extension that helps you sync all your *.env files based on a template.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+There are 2 commands available on this extension:
 
-For example if there is an image subfolder under your extension project workspace:
+### 1. Sync ALL *.env files
 
-\!\[feature X\]\(images/feature-x.png\)
+This function allows you to sync all your *.env files in your working directory with the .env template.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Sync All Envs Example](images/syncAllExample.gif)
+
+### 2. Sync selected *.env file
+
+This function allows you to sync only a selected *.env file in your working directory with .env template.
+
+![Sync Selected File Example](images/syncSelectedFileExample.gif)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+The template env file and the target files must be located on the working directory.
+
+By default, the template env file is named `.env.template`. This can be changed to a different template file on the extension settings.
+
+By default, the target env filename pattern is `*.env`. Therefore any file with this pattern except `.env` will be used for syncing. This can be changed to a different pattern file name on the extension settings. This means that files with names such as `vm.env`, `machine1.env` and `deployment.env` will be found by the extension.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `syncallenvs.templateFilename`: specifies the filename template to be used as base to sync other files, by default the template filename is `.env.template`
 
-## Known Issues
+* `syncallenvs.targetFilenamePattern`: specifies filename pattern of the filename to be used to by synced with the template file, by default the target filename pattern is `*.env`
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+![SyncAllEnvs Settings](images/settings.png)
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of SyncAllEnvs with sync all \*.env files, sync selected \*.env file and allowing user to customize template env file and target env files pattern
 
 -----------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
