@@ -3,6 +3,7 @@
 	"displayName": "SyncAllEnvs",
 	"description": "Sync all *.env files with a template template.env",
 	"version": "0.0.1",
+	"publisher": "esttenorio",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/esttenorio/vscode-syncallenvs.git"
