@@ -16,7 +16,8 @@
 	],
 	"activationEvents": [
 		"onCommand:syncallenvs.syncAllEnvFiles",
-		"onCommand:syncallenvs.syncSelectedEnvFile"
+		"onCommand:syncallenvs.syncSelectedEnvFile",
+		"onCommand:syncallenvs.syncEnvFamily"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -28,6 +29,10 @@
 			{
 				"command": "syncallenvs.syncSelectedEnvFile",
 				"title": "Sync selected .env file"
+			},
+			{
+				"command": "syncallenvs.syncEnvFamily",
+				"title": "Sync family files"
 			}
 		],
 		"configuration": [

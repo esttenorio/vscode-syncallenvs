@@ -1,11 +1,16 @@
+/*
+ *   Copyright (c) 2020 
+ *   All rights reserved.
+ */
 import * as vscode from "vscode";
+import * as path from 'path';
 import { writeFileSync, readFileSync } from "fs";
-import { ENV_SEPARATOR, COMMENT_SEPARATOR, UNMATCHED_VARS_MESSAGE, EXTENSION_NAME, TARGET_PATTERN_SETTING, TEMPLATE_FILENAME_SETTING } from "./constants";
+import { ENV_SEPARATOR, COMMENT_SEPARATOR, FAMILY_SEPARATOR, UNMATCHED_VARS_MESSAGE, EXTENSION_NAME, TARGET_PATTERN_SETTING, TEMPLATE_FILENAME_SETTING } from "./constants";
 
 export const createFileManager = async () => {
     const templateName = vscode.workspace.getConfiguration(EXTENSION_NAME).get(TEMPLATE_FILENAME_SETTING);
     const targetFilePattern = vscode.workspace.getConfiguration(EXTENSION_NAME).get(TARGET_PATTERN_SETTING);
-    
+
     // Setup
     return await vscode.workspace
         .findFiles(`**/${templateName}`, undefined, 1)
@@ -14,13 +19,13 @@ export const createFileManager = async () => {
                 vscode.window.showWarningMessage(`Template file "${templateName}" not found in working directory`);
                 return;
             }
-    
+
             const targetFiles = await vscode.workspace.findFiles(`**/${targetFilePattern}`, ".env");
             if (targetFiles.length === 0) {
                 vscode.window.showWarningMessage(`No files following the pattern "${targetFilePattern}" were found`);
                 return;
             }
-    
+
             return new FileManager(templateFile[0], targetFiles);
         });
 };
@@ -29,30 +34,41 @@ export class FileManager {
 
     public readonly templateFile: vscode.Uri;
     public readonly targetFiles: vscode.Uri[];
+    public readonly familyFiles: vscode.Uri[];
 
 
     constructor(templateFile: vscode.Uri, targetFiles: vscode.Uri[]) {
         this.templateFile = templateFile;
         this.targetFiles = targetFiles;
+        this.familyFiles = this.getFamilyFiles(targetFiles);
     }
 
-    public updateSelectedTargetFile(targetFile: vscode.Uri) {
+    private getFamilyFiles(targetFiles: vscode.Uri[]): vscode.Uri[] {
+        return targetFiles.filter(targetFile => !path.basename(targetFile.fsPath).includes(FAMILY_SEPARATOR));
+    }
+
+    public updateSelectedTargetFile(targetFile: vscode.Uri, templateFile: vscode.Uri | undefined = undefined) {
         const fileName = targetFile.fsPath;
         vscode.window.showInformationMessage('Syncing ' + fileName);
         // 1. Extract content of existing 
         const extractedContent = this.extractContentFromTargetFile(targetFile);
 
         // 2. Replace all content with template content
-        this.writeFile(targetFile, this.readFile(this.templateFile));
+        const template = templateFile ? templateFile : this.templateFile;
+        this.writeFile(targetFile, this.readFile(template));
 
         // 3. Populate new content with old keys if found
         this.populateFileWithValues(targetFile, extractedContent);
-        vscode.window.showInformationMessage('File ' + fileName +' is synced');
+        vscode.window.showInformationMessage('File ' + fileName + ' is synced');
     }
 
     public updateAllTargetFiles() {
-        this.targetFiles.forEach(targetFile => {
-            this.updateSelectedTargetFile(targetFile);
+        this.updateAllFamilyFiles(this.targetFiles);
+    }
+
+    public updateAllFamilyFiles(familyFiles: vscode.Uri[], templateFile: vscode.Uri | undefined = undefined) {
+        familyFiles.forEach(targetFile => {
+            this.updateSelectedTargetFile(targetFile, templateFile);
         });
     }
 
@@ -112,8 +128,7 @@ export class FileManager {
                 const newValue = result[1];
                 const oldValue = content[key] ? content[key] : undefined;
 
-                if (oldValue?.value)
-                {
+                if (oldValue?.value) {
                     // Replace content only if template doesnt have new value
                     // Saving "used" state
                     oldValue!.used = true;
@@ -156,7 +171,7 @@ export class FileManager {
 
 }
 
-type VariableContentMap = { [key:string]: VariableContent};
+type VariableContentMap = { [key: string]: VariableContent };
 
 interface VariableContent {
     value: string;
