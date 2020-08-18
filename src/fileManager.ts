@@ -5,7 +5,17 @@
 import * as vscode from "vscode";
 import * as path from 'path';
 import { writeFileSync, readFileSync } from "fs";
-import { ENV_SEPARATOR, COMMENT_SEPARATOR, FAMILY_SEPARATOR, UNMATCHED_VARS_MESSAGE, EXTENSION_NAME, TARGET_PATTERN_SETTING, TEMPLATE_FILENAME_SETTING } from "./constants";
+import {
+    ENV_SEPARATOR,
+    COMMENT_SEPARATOR,
+    FAMILY_SEPARATOR,
+    UNMATCHED_VARS_MESSAGE,
+    EXTENSION_NAME,
+    TARGET_PATTERN_SETTING,
+    TEMPLATE_FILENAME_SETTING,
+    EXTENSION_SEPARATOR,
+    DOT_ENV_FILE
+} from "./constants";
 
 export const createFileManager = async () => {
     const templateName = vscode.workspace.getConfiguration(EXTENSION_NAME).get(TEMPLATE_FILENAME_SETTING);
@@ -20,7 +30,7 @@ export const createFileManager = async () => {
                 return;
             }
 
-            const targetFiles = await vscode.workspace.findFiles(`**/${targetFilePattern}`, ".env");
+            const targetFiles = await vscode.workspace.findFiles(`**/${targetFilePattern}`, DOT_ENV_FILE);
             if (targetFiles.length === 0) {
                 vscode.window.showWarningMessage(`No files following the pattern "${targetFilePattern}" were found`);
                 return;
@@ -44,7 +54,10 @@ export class FileManager {
     }
 
     private getFamilyFiles(targetFiles: vscode.Uri[]): vscode.Uri[] {
-        return targetFiles.filter(targetFile => !path.basename(targetFile.fsPath).includes(FAMILY_SEPARATOR));
+        return targetFiles.filter(targetFile => {
+            const fileName = path.basename(targetFile.fsPath).split(EXTENSION_SEPARATOR)[0];
+            return fileName && !fileName.includes(FAMILY_SEPARATOR);
+        });
     }
 
     public updateSelectedTargetFile(targetFile: vscode.Uri, templateFile: vscode.Uri | undefined = undefined) {
@@ -90,8 +103,6 @@ export class FileManager {
         const extractedContent: VariableContentMap = {};
 
         rawContent.forEach(line => {
-            const strippedLine = line.trimLeft()
-
             const lineContent = this.getKeyAndValue(line);
             if (lineContent) {
                 extractedContent[lineContent[0]] = { value: lineContent[1]!, used: false };

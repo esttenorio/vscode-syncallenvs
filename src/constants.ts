@@ -7,6 +7,8 @@ export const COMMENT_SEPARATOR = "#"
 export const EXTENSION_SEPARATOR = "."
 export const FAMILY_SEPARATOR = "-"
 
+export const DOT_ENV_FILE = `${EXTENSION_SEPARATOR}env`
+
 export const EXTENSION_NAME = "syncallenvs"
 
 // Settings

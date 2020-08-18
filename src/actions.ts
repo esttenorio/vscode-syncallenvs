@@ -85,9 +85,7 @@ const getFamilyFiles = (files: vscode.Uri[], familyRootFile: vscode.Uri): vscode
 
     return files.filter((targetFile) => {
         const fileName = path.basename(targetFile.fsPath);
-        if (fileName.split(FAMILY_SEPARATOR).length >= 2 && fileName.startsWith(familyRootName)) {
-            return true;
-        }
+        return fileName.split(FAMILY_SEPARATOR).length >= 2 && fileName.startsWith(familyRootName);
     });
 }
 

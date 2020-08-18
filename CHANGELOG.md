@@ -2,7 +2,7 @@
 
 All notable changes to the "syncallenvs" extension will be documented in this file.
 
-## [Unreleased]
+## [Released]
 
 ## [0.0.1]
 
@@ -19,3 +19,7 @@ All notable changes to the "syncallenvs" extension will be documented in this fi
 ## [0.0.4]
 
 - Updating packages
+
+## [0.0.5]
+
+- Removing showing '.env' files as family root files when using 'sync family .env files' feature
