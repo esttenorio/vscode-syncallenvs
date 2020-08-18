@@ -32,7 +32,7 @@
 			},
 			{
 				"command": "syncallenvs.syncEnvFamily",
-				"title": "Sync family files"
+				"title": "Sync family .env files"
 			}
 		],
 		"configuration": [

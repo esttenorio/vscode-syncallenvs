@@ -54,6 +54,19 @@ Initial release of SyncAllEnvs with sync all \*.env files, sync selected \*.env 
 
 Fixing bug where values with `=` were cut off because it matched separator
 
+### 0.0.5
+
+Adding capability to sync "family env files".
+
+```
+Example:
+ex.env
+ex-1.env
+ex-2.env
+
+With the "sync family env files" capability you can sync ex-1.env, ex-2.env and ex-3.env with ex.env.
+```
+
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**
