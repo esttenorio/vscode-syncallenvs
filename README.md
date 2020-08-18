@@ -12,7 +12,7 @@ SYNC ALL ENVS is an extension that helps you sync all your *.env files based on 
 
 ## Features
 
-There are 2 commands available on this extension:
+There are 3 commands available on this extension:
 
 ### 1. Sync ALL *.env files
 
@@ -25,6 +25,28 @@ This function allows you to sync all your *.env files in your working directory 
 This function allows you to sync only a selected *.env file in your working directory with .env template.
 
 ![Sync Selected File Example](images/syncSelectedFileExample.gif)
+
+### 3. Sync family .env files
+
+This function allows you to sync files from the same family (root name).
+
+- `x.env`: _x_ is the family root name
+- `x-1.env`: belongs to family _'x'_
+
+To create families, keep the same root name and separate the name with a '-'.
+
+**Example:**
+In a repo where there are the following files:
+
+```
+ex.env  ex-1.env  ex-2.env  ase.env   ase-local.env
+```
+
+There are 2 families: `ex and ase` and `ex.env and ase.env` are the parents of these families.
+
+After selecting which family to sync, the family files will be synced with the .env parent file of that family
+
+![Sync Selected File Example](images/syncSelectedFamilyExample.gif)
 
 ## Requirements
 
@@ -54,18 +76,10 @@ Initial release of SyncAllEnvs with sync all \*.env files, sync selected \*.env 
 
 Fixing bug where values with `=` were cut off because it matched separator
 
-### 0.0.5
+### 0.0.3
 
-Adding capability to sync "family env files".
+Adding capability to sync family .env files
 
-```
-Example:
-ex.env
-ex-1.env
-ex-2.env
-
-With the "sync family env files" capability you can sync ex-1.env, ex-2.env and ex-3.env with ex.env.
-```
 
 -----------------------------------------------------------------------------------------------------------
 
