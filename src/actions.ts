@@ -4,7 +4,7 @@
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { createFileManager, FileManager } from "./fileManager";
+import { createFileManager } from "./fileManager";
 import { FAMILY_SEPARATOR, EXTENSION_SEPARATOR } from './constants';
 
 
